@@ -27,10 +27,6 @@ class WordReader {
             }
         }
 
-        wordMap.each { k, v ->
-            println "${k}\t${v}"
-        }
-
         return wordMap;
     }
 }
