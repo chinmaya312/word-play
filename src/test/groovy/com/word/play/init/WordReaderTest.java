@@ -8,7 +8,7 @@ public class WordReaderTest {
 
     @Test
     public void testLoadFiles() {
-        Map<String, Integer> map = WordReader.execute();
+        Map<String, Integer> map = WordReader.execute("build/classes/txtfiles");
         System.out.println(map.size());
     }
 }
