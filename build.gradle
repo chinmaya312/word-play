@@ -2,6 +2,7 @@ apply plugin: 'groovy'
 apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'eclipse-wtp'
+apply plugin: 'checkstyle'
 
 repositories {
         mavenCentral()
@@ -10,10 +11,22 @@ repositories {
 dependencies {
     testCompile 'junit:junit:4.12'
 	compile 'org.codehaus.groovy:groovy-all:2.4.6'
+	compile 'org.apache.logging.log4j:log4j-core:2.5'
+	compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.5'
+	compile 'org.slf4j:slf4j-api:1.7.18'
 }
 
-task copyTestResources(type: Copy) {
-    from "${projectDir}/src/test/resources"
-    into "${buildDir}/classes/"
+idea {
+	project {
+		vcs = 'Git'
+	}
+
+	module {
+		excludeDirs += file('gradle')
+		downloadJavadoc = true
+	}
 }
-processTestResources.dependsOn copyTestResources
+
+checkstyle {
+	toolVersion = '6.15'
+}

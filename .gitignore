@@ -5,6 +5,10 @@ build
 .classpath
 .project
 
+.idea
 word-play.iml
 word-play.ipr
 word-play.iws
+
+out
+
