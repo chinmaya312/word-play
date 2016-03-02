@@ -1,11 +1,10 @@
-.gradle/
-**/build/
+.gradle
+build
 
-**/.settings/
-**/.classpath
-**/.project
-**/bin/
+.settings
+.classpath
+.project
 
-*.iml
-*.ipr
-*.iws
+word-play.iml
+word-play.ipr
+word-play.iws
