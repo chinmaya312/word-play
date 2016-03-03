@@ -8,10 +8,35 @@ import java.nio.file.Paths;
 // this would only be called
 // from a singleton class
 // never call this directly
+/**
+ * This would only be invoked
+ * by an application scoped singleton
+ * object.
+ *
+ * Assumption is that the path of the file
+ * passed would be a directory in the classpath with
+ * list of files.
+ *
+ * @author Ravi
+ * @version 1.0
+ */
 class WordReader {
 
     private static final Logger logger = LogManager.getLogger("com.word.play.init.WordReader")
 
+    /**
+     * This method does all the grunt work of reading
+     * each file in the directory path that is passed to this method.
+     *
+     * It then tokenizes the lines with space and removing all non-alphabetic
+     * characters.
+     *
+     * Finally, it returns the Map containing the word and its frequency.
+     *
+     * @param folder String representing path to a folder in classpath
+     * @return Map containing word frequencies
+     * @throws IllegalArgumentException when the path to the file passed as param doesnt exist or is not a directory
+     */
     public static Map<String, Integer> execute(String folder) {
 
         Map<String, Integer> wordMap = new HashMap<String, Integer>()
