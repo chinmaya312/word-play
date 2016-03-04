@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.Map;
 
@@ -22,9 +23,10 @@ public class WordReaderTest {
   @Rule
   public Log4jMdcPopulatorRule log4JMdcPopulatorRule = new Log4jMdcPopulatorRule();
 
-  private static final Logger logger = LogManager.getLogger();
+  @Rule
+  public ExpectedException thrown= ExpectedException.none();
 
-  // TC01 - Test the loading of resources
+  private static final Logger logger = LogManager.getLogger();
 
   /**
    * TC01 - Test the loading of resources.
@@ -67,10 +69,25 @@ public class WordReaderTest {
    * TC03 - Invoke WordReader with folder name
    * that is not found in classpath.
    */
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testDirNotInClassPath() {
     logger.entry();
+    thrown.expect(IllegalArgumentException.class);
+    thrown.expectMessage("Resources with folder 'no-folder' not found");
     WordReader.execute("no-folder");
+    logger.exit();
+  }
+
+  /**
+   * TC03 - Invoke WordReader with folder name
+   * that is not found in classpath.
+   */
+  @Test
+  public void testNonDirInClassPath() {
+    logger.entry();
+    thrown.expect(IllegalArgumentException.class);
+    thrown.expectMessage("'testdata/wordreader/tc02/tc02.txt' is not a directory");
+    WordReader.execute("testdata/wordreader/tc02/tc02.txt");
     logger.exit();
   }
 }

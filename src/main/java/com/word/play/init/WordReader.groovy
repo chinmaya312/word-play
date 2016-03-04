@@ -3,11 +3,8 @@ package com.word.play.init
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 
-import java.io.*
-import java.nio.file.Paths;
-// this would only be called
-// from a singleton class
-// never call this directly
+import java.nio.file.Paths
+
 /**
  * This would only be invoked
  * by an application scoped singleton
@@ -35,7 +32,7 @@ class WordReader {
      *
      * @param folder String representing path to a folder in classpath
      * @return Map containing word frequencies
-     * @throws IllegalArgumentException when the path to the file passed as param doesnt exist or is not a directory
+     * @throws IllegalArgumentException when the path to the file passed as param doesn't exist or is not a directory
      */
     public static Map<String, Integer> execute(String folder) {
 
