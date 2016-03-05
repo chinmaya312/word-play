@@ -1,6 +1,6 @@
 package com.word.play.init;
 
-import com.sanbox.junit.rules.Log4jMdcPopulatorRule;
+import com.word.play.sandbox.Log4jMdcPopulator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Rule;
@@ -10,18 +10,19 @@ import org.junit.rules.ExpectedException;
 import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.containsString;
 
 /**
  * This is Test class for WorReader
  *
  * @author Ravi
  * @version 1.0
- * @see WordReader
+ * @see DictionaryInitializer
  */
-public class WordReaderTest {
+public class DictionaryInitializerTest {
 
   @Rule
-  public Log4jMdcPopulatorRule log4JMdcPopulatorRule = new Log4jMdcPopulatorRule();
+  public Log4jMdcPopulator log4JMdcPopulator = new Log4jMdcPopulator();
 
   @Rule
   public ExpectedException thrown= ExpectedException.none();
@@ -34,7 +35,7 @@ public class WordReaderTest {
   @Test
   public void testLoadFiles() {
     logger.entry();
-    Map<String, Integer> map = WordReader.execute("testdata/wordreader/tc01");
+    Map<String, Integer> map = DictionaryInitializer.execute("/testdata/wordreader/tc01");
     assertTrue("Map size should be greater than zero", map.size() > 0);
     logger.exit();
   }
@@ -54,7 +55,7 @@ public class WordReaderTest {
   @Test
   public void testFrequencies() {
     logger.entry();
-    Map<String, Integer> map = WordReader.execute("testdata/wordreader/tc02");
+    Map<String, Integer> map = DictionaryInitializer.execute("/testdata/wordreader/tc02");
     assertTrue("brown should occur once", map.get("brown") == 1);
     assertTrue("fox should occur 2 times", map.get("fox") == 2);
     assertTrue("jumped should occur once", map.get("jumped") == 1);
@@ -66,28 +67,28 @@ public class WordReaderTest {
   }
 
   /**
-   * TC03 - Invoke WordReader with folder name
+   * TC03 - Invoke DictionaryInitializer with folder name
    * that is not found in classpath.
    */
   @Test
   public void testDirNotInClassPath() {
     logger.entry();
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("Resources with folder 'no-folder' not found");
-    WordReader.execute("no-folder");
+    thrown.expectMessage(containsString("not found"));
+    DictionaryInitializer.execute("/no-folder");
     logger.exit();
   }
 
   /**
-   * TC03 - Invoke WordReader with folder name
-   * that is not found in classpath.
+   * TC04 - Invoke DictionaryInitializer with folder name
+   * that is found in classpath but is a file.
    */
   @Test
   public void testNonDirInClassPath() {
     logger.entry();
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("'testdata/wordreader/tc02/tc02.txt' is not a directory");
-    WordReader.execute("testdata/wordreader/tc02/tc02.txt");
+    thrown.expectMessage(containsString("not a directory"));
+    DictionaryInitializer.execute("/testdata/wordreader/tc02/tc02.txt");
     logger.exit();
   }
 }

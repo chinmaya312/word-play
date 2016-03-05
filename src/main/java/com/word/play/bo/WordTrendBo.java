@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WordTrendBo {
 
   private static Map<String, Integer> wordTrendMap = new ConcurrentHashMap<String, Integer>();
-  private static final Integer ONE = new Integer(1);
+  private static final Integer ONE = 1;
 
   public Integer getWordTrendingNumber(String key) {
     Integer answer = ONE;

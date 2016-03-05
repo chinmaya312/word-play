@@ -1,6 +1,4 @@
-apply plugin: 'groovy'
 apply plugin: 'war'
-apply plugin: 'idea'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'checkstyle'
 apply plugin: 'jacoco'
@@ -15,23 +13,9 @@ dependencies {
 
 	testCompile 'junit:junit:4.12'
 
-	compile 'org.codehaus.groovy:groovy-all:2.4.6'
 	compile 'org.apache.logging.log4j:log4j-core:2.5'
-	compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.5'
-	compile 'org.slf4j:slf4j-api:1.7.18'
 	compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.7.2'
 	compile 'com.fasterxml.woodstox:woodstox-core:5.0.2'
-}
-
-idea {
-	project {
-		vcs = 'Git'
-	}
-
-	module {
-		excludeDirs += file('gradle')
-		downloadJavadoc = true
-	}
 }
 
 checkstyle {
