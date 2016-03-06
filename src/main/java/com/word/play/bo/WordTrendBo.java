@@ -9,7 +9,7 @@ public class WordTrendBo {
   private static final Integer ONE = 1;
 
   /**
-   * Gets the number fo times word was searched for.
+   * Gets the number of times word was searched for.
    * Use of ConcurrentHashMap makes it thread safe.
    *
    * @param key word to search for
