@@ -9,8 +9,9 @@ import org.junit.rules.ExpectedException;
 
 import java.util.Map;
 
-import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertTrue;
+
 
 /**
  * This is Test class for WorReader
@@ -25,7 +26,7 @@ public class DictionaryInitializerTest {
   public Log4jMdcPopulator log4JMdcPopulator = new Log4jMdcPopulator();
 
   @Rule
-  public ExpectedException thrown= ExpectedException.none();
+  public ExpectedException thrown = ExpectedException.none();
 
   private static final Logger logger = LogManager.getLogger();
 

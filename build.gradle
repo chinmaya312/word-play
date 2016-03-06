@@ -2,9 +2,17 @@ apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'checkstyle'
 apply plugin: 'jacoco'
+apply plugin: 'liberty'
 
 repositories {
-        mavenCentral()
+	mavenCentral()
+}
+
+buildscript {
+	dependencies {
+		classpath files('gradle/plugins/liberty-gradle-plugin-1.0.jar')
+		classpath files('gradle/plugins/wlp-anttasks-1.1.jar')
+	}
 }
 
 dependencies {
@@ -20,4 +28,39 @@ dependencies {
 
 checkstyle {
 	toolVersion = '6.15'
+}
+check.dependsOn jacocoTestReport
+
+
+liberty {
+	installDir = "${buildDir}/wlp"
+	serverName = "${project.name}-server"
+	install {
+		type = "javaee7"
+	}
+
+	deploy {
+		file = war.archivePath
+	}
+
+	libertyStart {
+		if(!file("${installDir}/lib/ws-launch.jar").exists())
+			dependsOn installLiberty
+	}
+}
+
+deploy.dependsOn build
+deploy.dependsOn libertyStart
+
+task wpclean {
+	dependsOn clean
+	// if liberty server is present, try stoping it before cleaning
+	if(file(liberty.installDir).exists() && file("${liberty.installDir}/usr/servers/${liberty.serverName}").exists())
+		clean.dependsOn libertyStop
+}
+
+
+
+task wpdeploy {
+	dependsOn deploy
 }

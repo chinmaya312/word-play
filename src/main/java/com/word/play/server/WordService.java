@@ -30,13 +30,22 @@ public class WordService {
   @Inject
   WordTrendBo wordTrendBo;
 
+  /**
+   * Searches for the given word and returns the
+   * response as xml.
+   *
+   * @param key word to be searched for
+   * @return WordPlayResponse as xml string
+   * @see WordPlayResponse
+   */
   @GET
   @Path( "/{key}" )
   @Produces( "application/xml" )
   public Response getWordPlay(@PathParam("key")String key) {
 
     logger.entry(key);
-    WordPlayResponse wordPlayResponse =  new WordPlayResponse(key, server.getFrequency(key), wordTrendBo.getWordTrendingNumber(key));
+    WordPlayResponse wordPlayResponse =  new WordPlayResponse(key,
+        server.getFrequency(key), wordTrendBo.getWordTrendingNumber(key));
 
     ObjectMapper mapper = new XmlMapper();
     String responseString;

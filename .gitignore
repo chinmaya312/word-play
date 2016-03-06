@@ -1,14 +1,17 @@
+#gradle specific folders
 .gradle
-build
 
+#idea files
+.idea
+word-play.iml
+
+#eclipse files
 .settings
 .classpath
 .project
 
-.idea
-word-play.iml
-word-play.ipr
-word-play.iws
-
-out
+# build temp directories
+build
 classes
+out
+bin
