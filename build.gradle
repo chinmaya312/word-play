@@ -55,11 +55,11 @@ deploy.dependsOn libertyStart
 task wpclean {
 	dependsOn clean
 	// if liberty server is present, try stoping it before cleaning
-	if(file(liberty.installDir).exists() && file("${liberty.installDir}/usr/servers/${liberty.serverName}").exists())
-		clean.dependsOn libertyStop
+	if(file(liberty.installDir).exists() && file("${liberty.installDir}/usr/servers/${liberty.serverName}/server.xml").exists()){
+		dependsOn libertyStop
+		clean.mustRunAfter libertyStop
+	}
 }
-
-
 
 task wpdeploy {
 	dependsOn deploy
