@@ -24,11 +24,11 @@ public class WordTrendBo {
   public Integer getWordTrendingNumber(String key) {
     logger.entry(key);
     Integer answer = ONE;
-    if (wordTrendMap.containsKey(key)) {
-      answer = (wordTrendMap.put(key, (wordTrendMap.get(key) + 1))) + 1;
-    } else {
-      logger.info("{} not found - Adding to Map", key);
-      wordTrendMap.put(key, answer);
+
+    synchronized (wordTrendMap) {
+      if (wordTrendMap.putIfAbsent(key, ONE) != null) {
+        answer = (wordTrendMap.put(key, (wordTrendMap.get(key) + 1))) + 1;
+      }
     }
 
     logger.exit(answer);
